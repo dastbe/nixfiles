@@ -1,0 +1,267 @@
+" Settings {
+
+   " Define colorscheme
+   set background=dark
+   colorscheme molokai
+
+   " Convert tabs to spaces
+   set expandtab
+
+   " Do not create swap files
+   set noswapfile
+
+   " Use UTF for character encoding
+   set encoding=utf-8
+
+   " leave 3 lines between cursor and screen edge when scrolling
+   set scrolloff=3
+   
+   " Copy indent from previous line
+   set autoindent
+
+   " Current mode appears at bottom of window
+   set showmode
+
+   " Show information about current command at bottom of window
+   set showcmd
+
+   " Show hidden characters
+   set hidden
+
+   " Completes to longest common command prefix and then allows
+   " tabbing through commands
+   set wildmenu
+   set wildmode=longest:full,full
+
+   " No audio bell
+   set visualbell
+
+   " Highlight current cursor line
+   set cursorline
+
+   " Helps with draw speed (?)
+   set ttyfast
+
+   " Gives cursor location in bottom-right-hand corner
+   set ruler
+
+   " Makes backspace work over auto-inserted indents and over line breaks
+   set backspace=indent,eol,start
+
+   " Always show status line
+   set laststatus=2
+
+   " Show invisible characters (?)
+   "set list
+
+   " Sets the list of invisible characters
+   "set listchars=tab:▸\ ,eol:¬
+
+   " Save files when focus is lost
+   " au FocusLost *
+   
+   " Fold based on syntax of filetype
+   " set foldmethod=syntax
+
+   " Auto-fold starting at the 8th ply
+   " set foldlevelstart=8
+   
+   " Text wrapping {
+
+      " Automatically wraps texts after {textwidth} characters
+      set wrap
+
+      " Do not break mid-word
+      set nolist
+      set linebreak
+      
+      " Number of characters on a line before a line wrap is automatically
+      " inserted
+      set textwidth=79
+
+      " q -> Allow formatting of comments with "gq"
+      "
+      " r -> Automatically insert current comment leader after hitting
+      "        <Enter> in insert mode
+      "
+      " n -> When formatting text, recognize numbered lists.  This actually 
+      "        uses the 'formatlistpat' option, thus any kind of list can be
+      "        used.  The indent of the text after the number is used for the
+      "        next line.  The default is to find a number, optionally followed 
+      "        by '.', ':', ')', ']' or '}'.  Note that 'autoindent' must be 
+      "        set too.  Doesn't work well together with "2".
+      "        Example: >
+      "           1. the first item
+      "              wraps
+      "           2. the second item
+      "
+      " 1 -> Don't break a line after a one-letter word.  It's broken before 
+      "        it instead (if possible).
+      set formatoptions=qrn1
+
+      " Visualizes where textwrap will occur
+      set colorcolumn=80
+
+   " }
+
+   " Search {
+
+      " Ignore case in search when pattern is all lowercase
+      set smartcase
+
+      " Default to subsitute multiple times per line. Use g to
+      " disable this behavior
+      set gdefault
+
+      " Highlights search results
+      set hlsearch
+
+      " Search as search string is typed
+      set incsearch
+
+      " Show search results as search string is typed
+      set showmatch
+
+   " }
+
+   " Specifically for higher versions of VIM {
+
+      if version >= 703
+         " Default to relative numbering
+         set relativenumber
+
+         " Set absolute numbering in insert mode
+         autocmd InsertEnter * :set number
+
+         " Set relative numbering otherwise
+         autocmd InsertLeave * :set relativenumber
+
+         " Use an undo file
+         set undofile
+         set undodir=./.backup,/tmp
+      endif
+
+   " }
+
+" }
+
+" KeyBindings {
+
+   " Global Leader Key
+   let mapleader = ","
+
+   " Rebind for leaving insert mode
+   inoremap jj <ESC>
+   
+   " Rebind search to use magic mode
+   nnoremap / /\v
+   vnoremap / /\v
+
+   " Removes highlighted search results
+   nnoremap <leader><space> :noh<cr>
+
+
+   " Unmap arrows {
+
+      nnoremap <up> <nop>
+      nnoremap <down> <nop>
+      nnoremap <left> <nop>
+      nnoremap <right> <nop>
+      inoremap <up> <nop>
+      inoremap <down> <nop>
+      inoremap <left> <nop>
+      inoremap <right> <nop>
+
+   " }
+
+   " Remap j/k to move by displayed lines {
+
+      nnoremap j gj
+      nnoremap k gk
+
+   " }
+
+   " fold ply
+   nnoremap <leader>ff za
+   
+   " Strip trailing whitespace
+   nnoremap <leader>W :%s/\s\+$//<cr>:let @/=''<CR>
+
+   " Shortcut for opening .vimrc in a new split
+   nnoremap <leader>ev <C-w><C-v><C-l>:e $MYVIMRC<cr>
+
+
+   " Shortcut for new vertical split
+   nnoremap <leader>w <C-w>v<C-w>l
+
+   " Moving around splits {
+
+      nnoremap <C-h> <C-w>h
+      nnoremap <C-j> <C-w>j
+      nnoremap <C-k> <C-w>k
+      nnoremap <C-l> <C-w>l
+
+   " }
+
+   " have semicolon default to colon in normal and visual mode
+   nnoremap ; :
+   vnoremap ; :
+
+   " Turn off vim-markdown's dump autofold
+   let g:vim_markdown_folding_disabled = 1
+
+   nnoremap <leader>tf :TableFormat<CR>
+
+" }
+
+" Filetype Presets {
+
+   " General {
+
+      au BufRead,BufNewFile * set tabstop=3
+      au BufRead,BufNewFile * set shiftwidth=3
+      au BufRead,BufNewFile * set softtabstop=3
+
+   " }
+
+   " Gradle {
+
+      au BufRead,BufNewFile *.gradle set tabstop=2
+      au BufRead,BufNewFile *.gradle set shiftwidth=2
+      au BufRead,BufNewFile *.gradle set softtabstop=2
+
+   " }
+
+
+   " JSX/TSX {
+
+      au BufRead,BufNewFile *.jsx set tabstop=2
+      au BufRead,BufNewFile *.jsx set shiftwidth=2
+      au BufRead,BufNewFile *.jsx set softtabstop=2
+
+      au BufRead,BufNewFile *.tsx set tabstop=2
+      au BufRead,BufNewFile *.tsx set shiftwidth=2
+      au BufRead,BufNewFile *.tsx set softtabstop=2
+
+   " }
+ 
+   " Rust {
+
+      au BufRead,BufNewFile *.rs set tabstop=4
+      au BufRead,BufNewFile *.rs set shiftwidth=4
+      au BufRead,BufNewFile *.rs set softtabstop=4
+
+   " }
+   
+   " Ruby {
+      autocmd Filetype ruby setlocal tabstop=2 shiftwidth=2 softtabstop=2
+   " }
+   
+   " Markdown {
+      " au BufRead,BufNewFile *.md set textwidth=0 wrapmargin=0
+   " }
+   " GoLang {
+      au BufRead,BufNewFile *.go nnoremap <leader>r :GoRun<cr>
+   " }
+
+" }
